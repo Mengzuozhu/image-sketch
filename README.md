@@ -6,4 +6,4 @@
 
 输出：
 
-![demo](https://github.com/Mengzuozhu/sketch/blob/master/out/demo.jpg)
+![demo](https://github.com/Mengzuozhu/sketch/blob/master/out_demo.jpg)
