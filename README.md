@@ -2,8 +2,8 @@
 
 输入：
 
-![demo](E:\PycharmProject\daily\sketch\demo.jpg)
+![demo](https://github.com/Mengzuozhu/sketch/blob/master/demo.jpg)
 
 输出：
 
-![demo](E:\PycharmProject\daily\sketch\out\demo.jpg)
+![demo](https://github.com/Mengzuozhu/sketch/blob/master/out/demo.jpg)
