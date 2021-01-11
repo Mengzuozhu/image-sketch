@@ -2,7 +2,8 @@
 import cv2
 from PIL import Image, ImageOps, ImageFilter
 
-blur_count = 5
+# 次数越多，素描阴影效果越强
+blur_count = 10
 
 
 def sketch_image(in_file, out_file):
