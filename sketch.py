@@ -3,7 +3,7 @@ import cv2
 from PIL import Image, ImageOps, ImageFilter
 
 # 次数越多，素描阴影效果越强
-blur_count = 10
+blur_count_for_shadow = 10
 
 
 def sketch_image(in_file, out_file):
@@ -15,7 +15,7 @@ def sketch_image(in_file, out_file):
     image: Image.Image = Image.open(in_file).convert('L')
     out_image = image.copy()
     invert_image = ImageOps.invert(image.copy())
-    invert_image = blur_image(invert_image, blur_count)
+    invert_image = blur_image(invert_image, blur_count_for_shadow)
     width = int(image.width)
     for x in range(width):
         for y in range(image.height):
