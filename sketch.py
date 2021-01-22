@@ -15,19 +15,33 @@ def sketch_image(in_file, out_file):
     :param in_file:
     :param out_file:
     """
-    image: Image.Image = Image.open(in_file).convert('L')
+    in_image = Image.open(in_file)
+    image: Image.Image = in_image.convert('L')
     out_image = image.copy()
     invert_image = ImageOps.invert(image.copy())
     invert_image = blur_image(invert_image, BLUR_COUNT_FOR_SHADOW)
-    width = int(image.width)
-    for x in range(width):
+    for x in range(image.width):
         for y in range(image.height):
             raw_pixel = image.getpixel((x, y))
             invert_pixel = invert_image.getpixel((x, y))
             out_pixel = min(int(raw_pixel * SCALE / (256 - invert_pixel)), SCALE)
             out_image.putpixel((x, y), out_pixel)
-    # out_image.show()
-    out_image.save(out_file)
+    rgb_out = out_image.convert("RGB")
+    merge_out = merge(in_image, rgb_out)
+    merge_out.save(out_file)
+
+
+def merge(raw_image, image2):
+    out_image = image2.copy()
+    x_begin = int(raw_image.width / 2)
+    x_end = raw_image.width
+    y_begin = int(raw_image.height / 2)
+    y_end = int(raw_image.height)
+    for x in range(x_begin, x_end, 1):
+        for y in range(y_begin, y_end, 1):
+            raw_pixel = raw_image.getpixel((x, y))
+            out_image.putpixel((x, y), raw_pixel)
+    return out_image
 
 
 def sketch_cv(in_file, out_file):
@@ -53,4 +67,4 @@ def blur_image(image, count):
 if __name__ == '__main__':
     file = 'demo.jpg'
     sketch_image(file, "out/" + file)
-    sketch_cv(file, "out/" + "cv_" + file)
+    # sketch_cv(file, "out/" + "cv_" + file)
