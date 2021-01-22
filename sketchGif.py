@@ -15,5 +15,5 @@ def to_gif(in_image, rgb_out, out_file):
 
 if __name__ == '__main__':
     file = 'demo.jpg'
-    out = "out/move_demo.gif"
+    out = 'out/move_demo.gif'
     sketch.sketch_image(file, out, to_gif)
