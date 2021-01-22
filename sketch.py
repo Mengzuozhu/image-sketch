@@ -7,9 +7,10 @@ SCALE = 255
 BLUR_COUNT_FOR_SHADOW = 10
 # 必须为正奇数
 KSIZE_FOR_SHADOW = 31
+FRAME_COUNT = 10
 
 
-def sketch_image(in_file, out_file):
+def sketch_image(in_file, out_file, func):
     """
     素描图片
     :param in_file:
@@ -27,18 +28,22 @@ def sketch_image(in_file, out_file):
             out_pixel = min(int(raw_pixel * SCALE / (256 - invert_pixel)), SCALE)
             out_image.putpixel((x, y), out_pixel)
     rgb_out = out_image.convert("RGB")
-    merge_out = merge(in_image, rgb_out)
+    func(in_image, rgb_out, out_file)
+
+
+def to_png(in_image, rgb_out, out_file):
+    merge_out = merge(in_image, rgb_out, 0.5)
     merge_out.save(out_file)
 
 
-def merge(raw_image, image2):
-    out_image = image2.copy()
-    x_begin = int(raw_image.width / 2)
-    x_end = raw_image.width
-    y_begin = int(raw_image.height / 2)
+def merge(raw_image, gray_image, part):
+    out_image = gray_image.copy()
+    x_begin = 0
+    x_end = int(raw_image.width * part)
+    y_begin = 0
     y_end = int(raw_image.height)
-    for x in range(x_begin, x_end, 1):
-        for y in range(y_begin, y_end, 1):
+    for x in range(x_begin, x_end):
+        for y in range(y_begin, y_end):
             raw_pixel = raw_image.getpixel((x, y))
             out_image.putpixel((x, y), raw_pixel)
     return out_image
@@ -66,5 +71,6 @@ def blur_image(image, count):
 
 if __name__ == '__main__':
     file = 'demo.jpg'
-    sketch_image(file, "out/" + file)
+    out = "out/demo.jpg"
+    sketch_image(file, out, to_png)
     # sketch_cv(file, "out/" + "cv_" + file)
