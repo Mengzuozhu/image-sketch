@@ -7,7 +7,7 @@ import sketchOpenCv
 
 FRAME_COUNT = 15
 # second
-DURATION = 0.5
+DURATION = 0.3
 
 
 def to_gif(in_image, rgb_out, out_file):
@@ -16,7 +16,7 @@ def to_gif(in_image, rgb_out, out_file):
         merge = sketchOpenCv.merge(in_image, rgb_out, raw_width_ratio=i / FRAME_COUNT)
         image = Image.fromarray(cv2.cvtColor(merge, cv2.COLOR_BGR2RGB))
         images.append(image)
-    imageio.mimsave(out_file, images, duration=DURATION)
+    imageio.mimsave(out_file, images, duration=DURATION, subrectangles=True)
 
 
 if __name__ == '__main__':
