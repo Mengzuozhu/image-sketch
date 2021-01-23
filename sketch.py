@@ -8,6 +8,8 @@ BLUR_COUNT_FOR_SHADOW = 10
 # 必须为正奇数
 KSIZE_FOR_SHADOW = 31
 FRAME_COUNT = 10
+# 原始图片比例
+RAW_RATIO = 0
 
 
 def sketch_image(in_file, out_file, func):
@@ -32,7 +34,7 @@ def sketch_image(in_file, out_file, func):
 
 
 def to_png(in_image, rgb_out, out_file):
-    merge_out = merge(in_image, rgb_out, 0.5)
+    merge_out = merge(in_image, rgb_out, RAW_RATIO)
     merge_out.save(out_file)
 
 
@@ -50,10 +52,10 @@ def merge(raw_image, gray_image, part):
 
 
 def sketch_cv(in_file, out_file):
-    image_read = cv2.imread(in_file)
-    image_gray = cv2.cvtColor(image_read, cv2.COLOR_RGB2GRAY)
-    image_blur = cv2.GaussianBlur(image_gray, ksize=(KSIZE_FOR_SHADOW, KSIZE_FOR_SHADOW), sigmaX=0, sigmaY=0)
-    out_image = cv2.divide(image_gray, image_blur, scale=SCALE)
+    in_image = cv2.imread(in_file)
+    gray_image = cv2.cvtColor(in_image, cv2.COLOR_RGB2GRAY)
+    blur_image = cv2.GaussianBlur(gray_image, ksize=(KSIZE_FOR_SHADOW, KSIZE_FOR_SHADOW), sigmaX=0, sigmaY=0)
+    out_image = cv2.divide(gray_image, blur_image, scale=SCALE)
     cv2.imwrite(out_file, out_image)
 
 
