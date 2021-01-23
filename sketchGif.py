@@ -5,7 +5,7 @@ from PIL import Image
 
 import sketchOpenCv
 
-FRAME_COUNT = 10
+FRAME_COUNT = 15
 # second
 DURATION = 0.5
 
@@ -21,5 +21,5 @@ def to_gif(in_image, rgb_out, out_file):
 
 if __name__ == '__main__':
     file = 'demo.jpg'
-    out = 'out/move_demo1.gif'
+    out = 'out/move_demo.gif'
     sketchOpenCv.sketch_image(file, out, to_gif)
