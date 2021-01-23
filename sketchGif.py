@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
+import cv2
 import imageio
+from PIL import Image
 
-import sketch
+import sketchOpenCv
 
 FRAME_COUNT = 10
 # second
@@ -11,11 +13,13 @@ DURATION = 0.5
 def to_gif(in_image, rgb_out, out_file):
     images = []
     for i in range(FRAME_COUNT, 0, -1):
-        images.append(sketch.merge(in_image, rgb_out))
+        merge = sketchOpenCv.merge(in_image, rgb_out, raw_width_ratio=i / FRAME_COUNT)
+        image = Image.fromarray(cv2.cvtColor(merge, cv2.COLOR_BGR2RGB))
+        images.append(image)
     imageio.mimsave(out_file, images, duration=DURATION)
 
 
 if __name__ == '__main__':
     file = 'demo.jpg'
-    out = 'out/move_demo.gif'
-    sketch.sketch_image(file, out)
+    out = 'out/move_demo1.gif'
+    sketchOpenCv.sketch_image(file, out, to_gif)

@@ -11,7 +11,7 @@ RAW_WIDTH_RATIO = 0.5
 RAW_HEIGHT_RATIO = 1
 
 
-def sketch_image(in_file, out_file):
+def sketch_image(in_file, out_file, func):
     """
     素描图片
     :param in_file:
@@ -22,6 +22,10 @@ def sketch_image(in_file, out_file):
     blur_image = cv2.GaussianBlur(gray_image, ksize=(KSIZE_FOR_SHADOW, KSIZE_FOR_SHADOW), sigmaX=0, sigmaY=0)
     out_image = cv2.divide(gray_image, blur_image, scale=SCALE)
     rgb_out = cv2.cvtColor(out_image, cv2.COLOR_GRAY2RGB)
+    func(in_image, rgb_out, out_file)
+
+
+def to_image(in_image, rgb_out, out_file):
     merge_out = merge(in_image, rgb_out)
     cv2.imwrite(out_file, merge_out)
 
@@ -51,5 +55,5 @@ if __name__ == '__main__':
     file = 'demo.jpg'
     out = 'out/demo.jpg'
     start = time.time()
-    sketch_image(file, out)
+    sketch_image(file, out, to_image)
     print(time.time() - start)
