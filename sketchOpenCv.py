@@ -43,14 +43,6 @@ def merge(raw_image, gray_image, raw_width_ratio=RAW_WIDTH_RATIO, raw_height_rat
     return out_image
 
 
-def sketch_cv(in_file, out_file):
-    in_image = cv2.imread(in_file)
-    gray_image = cv2.cvtColor(in_image, cv2.COLOR_RGB2GRAY)
-    blur_image = cv2.GaussianBlur(gray_image, ksize=(KSIZE_FOR_SHADOW, KSIZE_FOR_SHADOW), sigmaX=0, sigmaY=0)
-    out_image = cv2.divide(gray_image, blur_image, scale=SCALE)
-    cv2.imwrite(out_file, out_image)
-
-
 if __name__ == '__main__':
     file = 'demo.jpg'
     out = 'out/demo.jpg'
