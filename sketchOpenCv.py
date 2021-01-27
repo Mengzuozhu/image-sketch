@@ -46,6 +46,4 @@ def merge(raw_image, gray_image, raw_width_ratio=RAW_WIDTH_RATIO, raw_height_rat
 if __name__ == '__main__':
     file = 'demo.jpg'
     out = 'out/demo.jpg'
-    start = time.time()
     sketch_image(file, out, to_image)
-    print(time.time() - start)
