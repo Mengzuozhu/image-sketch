@@ -5,7 +5,7 @@ Y_INTERVAL = 0
 WIDTH = 10
 
 
-def stripe(raw_image: Image.Image, out_image: Image.Image):
+def process(raw_image: Image.Image, out_image: Image.Image):
     """
     条纹处理
     :param raw_image:
