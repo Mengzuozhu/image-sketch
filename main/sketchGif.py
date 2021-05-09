@@ -3,7 +3,7 @@ import cv2
 import imageio
 from PIL import Image
 
-import sketchOpenCv
+from main import sketchOpenCv
 
 FRAME_COUNT = 15
 # second
@@ -20,6 +20,6 @@ def to_gif(in_image, rgb_out, out_file):
 
 
 if __name__ == '__main__':
-    file = 'demo.jpg'
-    out = 'out/move_demo.gif'
+    file = '2.jpg'
+    out = 'out/move_2.gif'
     sketchOpenCv.sketch_image(file, out, to_gif)

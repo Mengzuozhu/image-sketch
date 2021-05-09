@@ -2,12 +2,14 @@
 
 from PIL import Image, ImageOps, ImageFilter
 
+from handler import StripeHandler
+
 SCALE = 255
 # 值越大，素描阴影效果越强
 BLUR_COUNT_FOR_SHADOW = 10
 # 原始图片比例
-RAW_WIDTH_RATIO = 0.5
-RAW_HEIGHT_RATIO = 1
+RAW_X_RANGE = [0, 0.5]
+RAW_Y_RANGE = [0, 1]
 
 
 def sketch_image(in_file, out_file):
@@ -28,16 +30,16 @@ def sketch_image(in_file, out_file):
             out_pixel = min(int(raw_pixel * SCALE / (256 - invert_pixel)), SCALE)
             out_image.putpixel((x, y), out_pixel)
     rgb_out = out_image.convert("RGB")
-    merge_out = merge(in_image, rgb_out)
+    merge_out = StripeHandler.stripe(in_image, rgb_out)
+    # merge_out = merge_raw(in_image, rgb_out)
     merge_out.save(out_file)
 
 
-def merge(raw_image, gray_image):
-    out_image = gray_image.copy()
-    x_begin = 0
-    x_end = int(raw_image.width * RAW_WIDTH_RATIO)
-    y_begin = 0
-    y_end = int(raw_image.height * RAW_HEIGHT_RATIO)
+def merge_raw(raw_image: Image.Image, out_image: Image.Image):
+    x_begin = int(raw_image.width * RAW_X_RANGE[0])
+    x_end = int(raw_image.width * RAW_X_RANGE[1])
+    y_begin = int(raw_image.height * RAW_Y_RANGE[0])
+    y_end = int(raw_image.height * RAW_Y_RANGE[1])
     for x in range(x_begin, x_end):
         for y in range(y_begin, y_end):
             raw_pixel = raw_image.getpixel((x, y))
@@ -58,6 +60,6 @@ def blur_image(image, count):
 
 
 if __name__ == '__main__':
-    file = 'demo.jpg'
-    out = 'out/demo.jpg'
+    file = '2.jpg'
+    out = 'out/2.png'
     sketch_image(file, out)
