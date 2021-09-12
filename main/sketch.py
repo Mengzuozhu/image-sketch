@@ -46,6 +46,6 @@ def blur_image(image, count):
 
 
 if __name__ == '__main__':
-    file = 'in/demo.jpg'
-    out = 'out/demo.png'
+    file = '../in/demo.jpg'
+    out = '../out/demo.png'
     sketch_image(file, out)
