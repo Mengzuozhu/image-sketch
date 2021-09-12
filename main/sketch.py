@@ -16,14 +16,15 @@ def sketch_image(in_file, out_file):
     :param out_file:
     """
     in_image = Image.open(in_file)
-    image: Image.Image = in_image.convert('L')
+    gray = in_image.convert('L')
+    image: Image.Image = gray.copy()
     out_image = image.copy()
     invert_image = ImageOps.invert(image.copy())
-    invert_image = blur_image(invert_image, BLUR_COUNT_FOR_SHADOW)
+    blur_img = blur_image(invert_image, BLUR_COUNT_FOR_SHADOW)
     for x in range(image.width):
         for y in range(image.height):
             raw_pixel = image.getpixel((x, y))
-            invert_pixel = invert_image.getpixel((x, y))
+            invert_pixel = blur_img.getpixel((x, y))
             out_pixel = min(int(raw_pixel * SCALE / (256 - invert_pixel)), SCALE)
             out_image.putpixel((x, y), out_pixel)
     rgb_out = out_image.convert("RGB")
@@ -45,6 +46,6 @@ def blur_image(image, count):
 
 
 if __name__ == '__main__':
-    file = '2.jpg'
-    out = 'out/2.png'
+    file = 'demo.jpg'
+    out = 'out/demo.png'
     sketch_image(file, out)
