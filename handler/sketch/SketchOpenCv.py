@@ -44,6 +44,6 @@ def merge(raw_image, gray_image, raw_width_ratio=RAW_WIDTH_RATIO, raw_height_rat
 
 
 if __name__ == '__main__':
-    file = 'demo.jpg'
-    out = 'out/demo.jpg'
+    file = '../../in/demo.jpg'
+    out = '../../out/demo.png'
     sketch_image(file, out, to_image)

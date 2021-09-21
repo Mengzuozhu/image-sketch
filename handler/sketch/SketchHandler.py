@@ -9,11 +9,10 @@ SCALE = 255
 BLUR_COUNT_FOR_SHADOW = 10
 
 
-def sketch_image(in_file, out_file):
+def sketch_image(in_file):
     """
     素描图片
     :param in_file:
-    :param out_file:
     """
     in_image = Image.open(in_file)
     gray = in_image.convert('L')
@@ -30,7 +29,7 @@ def sketch_image(in_file, out_file):
     rgb_out = out_image.convert("RGB")
     # merge_out = StripeHandler.stripe(in_image, rgb_out)
     merge_out = RatioHandler.process(in_image, rgb_out)
-    merge_out.save(out_file)
+    return merge_out
 
 
 def blur_image(image, count):
@@ -46,6 +45,7 @@ def blur_image(image, count):
 
 
 if __name__ == '__main__':
-    file = '../in/demo.jpg'
-    out = '../out/demo.png'
-    sketch_image(file, out)
+    file = '../../in/demo.jpg'
+    out = '../../out/demo.png'
+    res = sketch_image(file)
+    res.save(out)
